@@ -36,7 +36,7 @@ class AgentController {
       username: 'input[name=loginCode]',
       password: 'input[name=loginPassword]',
       validation: '#loginImgCode',
-      checkbox: '.el-checkbox__original',
+      checkbox: '.el-checkbox',
       loginBtn: '.login-btn',
       
     }
@@ -45,10 +45,10 @@ class AgentController {
     // input username , password
     await bot.page.type(SELECTOR.username, USER.username)
     await bot.page.type(SELECTOR.password, USER.password)
-
+    await bot.page.screenshot({ path: 'capture-preview-1.png' });
     await bot.page.waitForSelector('.img-container > img')
     const img = await bot.page.$('.img-container > img')
-    const imgCaptcha = await img.screenshot({ path: 'captcha.png' })
+    const imgCaptcha = await img.screenshot({ path: 'capture-captcha.png' })
     // const imgCaptcha = await img.screenshot()
     // console.timeEnd('get img from web')
 
@@ -70,20 +70,20 @@ class AgentController {
 
     // input validation captcha
     const verifyInput = `${text[0]}${text[1]}${text[2]}${text[3]}`
+    await bot.page.click(SELECTOR.validation)
+    await bot.page.waitForTimeout(100)
     await bot.page.type(SELECTOR.validation, verifyInput)
     
  
     const checkboxEl = await bot.page.waitForSelector(SELECTOR.checkbox);
     checkboxEl.click();
  
-  
-
-    await bot.page.waitForTimeout(200)
-    // await bot.page.click(SELECTOR.loginBtn)
+    await bot.page.screenshot({ path: 'capture-preview-2.png' });
     
     await bot.page.waitForTimeout(500)
-
-    await bot.page.screenshot({ path: 'preview.png' });
+    await bot.page.click(SELECTOR.loginBtn)
+    await bot.page.waitForTimeout(500)
+    await bot.page.screenshot({ path: 'capture-preview-3.png' });
 
     await bot.browser.close()
   
