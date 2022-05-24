@@ -1,4 +1,4 @@
-# API UFA BOT BETA
+# API JT EXpress
 web scriping on https://vip.jtexpress.co.th
 ## วิธี Setup ENV
 ดูได้ใน .env.example นะจ๊ะ
