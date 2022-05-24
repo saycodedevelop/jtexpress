@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  bot-ufa:
+    build:
+      context: .
+      dockerfile: docker/adonis-prod.dockerfile
+    container_name: adonis_bot_ufa
+    command: npm start
+    ports:
+      - "3101:3333"
+    expose:
+      - "3333"
+    volumes:
+      - ./backend:/var/app
+      - ./.env:/var/app/.env
+      - /var/app/node_modules
+    environment:
+      - TZ=Asia/Bangkok
+  bot-redis:
+    image: redis:6.2
+    container_name: redis_bot_ufa
+    ports:
+      - "6311:6379"
