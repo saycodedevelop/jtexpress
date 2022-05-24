@@ -20,6 +20,7 @@ const Route = use('Route')
 Route.on('/').render('welcome')
 Route.group(() => {
   Route.post('/login', 'AgentController.login')
+  Route.post('/list', 'AgentController.getTest')
 }).prefix('v1/agent')
 
 // Route.group(() => {
