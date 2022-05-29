@@ -3,7 +3,7 @@
 const puppeteer = require('puppeteer')
 // const Redis = use('Redis')
 class Bot {
-  static async start(request) {
+  static async start() {
     const browserFetcher = await puppeteer.createBrowserFetcher()
     const revisionInfo = await browserFetcher.download('818858')
     const browser = await puppeteer.launch({
