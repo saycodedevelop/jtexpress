@@ -24,20 +24,21 @@ class JTController {
         }
     }
     async getOrder({ request, response }) {
+        const { ids, startDate, endDate, page, pageSize, size, idType, signFlag, goodsName, orderStatus, printFlag, isMult } = request.body
         const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
         configheader.parameter = {
-            endDate: '2022-05-29 20:04:04',
-            ids: '',
-            page: 1,
-            pageSize: 20,
-            startDate: '2022-05-28 00:00:00',
-            idType: '1',
-            signFlag: '',
-            goodsName: '',
-            orderStatus: '',
-            printFlag: '',
-            isMult: '',
-            size: 20,
+            ids,
+            startDate,
+            endDate,
+            page,
+            pageSize,
+            size,
+            idType,
+            signFlag,
+            goodsName,
+            orderStatus,
+            printFlag,
+            isMult,
         }
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/getOrders.do`, configheader)
@@ -51,8 +52,15 @@ class JTController {
     }
 
     async getTracking({ request, response }) {
+        const { ids } = request.body
+        if (!ids) {
+            return response.json({
+                success: false,
+                message: 'กรุณาส่งหมายเลขออเดอร์ (หากมีมากกว่า1 ให้ใช้เครื่องหาย "," )',
+            })
+        }
         const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
-        configheader.parameter = 860969356553
+        configheader.parameter = ids
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/trackingList.do`, configheader)
             return response.json(data)
@@ -65,8 +73,15 @@ class JTController {
     }
 
     async getPrint({ request, response }) {
+        const { ids, templet } = request.body
+        if (!ids || !templet) {
+            return response.json({
+                success: false,
+                message: 'กรุณาส่งหมายเลขออเดอร์ และ templet',
+            })
+        }
         const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
-        configheader.parameter = { ids: "860969354512", templet: "4" }
+        configheader.parameter = { ids, templet }
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/printOrder.do`, configheader)
             return response.json(data)
