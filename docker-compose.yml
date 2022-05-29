@@ -1,11 +1,11 @@
 version: "3"
 
 services:
-  bot-ufa:
+  bot-api:
     build:
       context: .
       dockerfile: docker/adonis.dockerfile
-    container_name: adonis_bot_ufa_dev
+    container_name: adonis_bot_dev
     command: npm run dev
     ports:
       - "3101:3333"
@@ -20,6 +20,6 @@ services:
 
   bot-redis:
     image: redis:6.2
-    container_name: redis_bot_ufa_dev
+    container_name: redis_bot_dev
     ports:
       - "6311:6379"

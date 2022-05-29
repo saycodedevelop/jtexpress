@@ -10,7 +10,7 @@ const Status = use('App/Libs/Status')
 
 const WEBSITE_URL = Env.get('THIRDPIRTY_URL')
 const axios = require('axios')
-
+ 
 class AgentController {
   async login({ request, response }) {
     if (!request.post().username || !request.post().password) {
