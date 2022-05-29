@@ -4,7 +4,7 @@ const Task = use('Task')
 
 class ScheduleIt extends Task {
   static get schedule () {
-    return '1 * * * * *'
+    return '* 1 * * * *'
   }
 
   async handle () {
