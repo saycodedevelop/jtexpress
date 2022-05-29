@@ -1,8 +1,8 @@
 {
-  "name": "adonis-fullstack-app",
+  "name": "jtexpress",
   "version": "4.1.0",
   "adonis-version": "4.1.0",
-  "description": "The fullstack application boilerplate for Adonisjs",
+  "description": "web scrapping jtexpress",
   "main": "index.js",
   "scripts": {
     "start": "pm2-runtime ecosystem.config.js",
@@ -13,7 +13,7 @@
     "adonisjs",
     "adonis-app"
   ],
-  "author": "",
+  "author": "Saycode Development",
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
