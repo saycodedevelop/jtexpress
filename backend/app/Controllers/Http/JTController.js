@@ -5,6 +5,29 @@ const GenerateHeader = use('App/Libs/GenerateHeader')
 const axios = require('axios')
 const WEBSITE_URL = Env.get('THIRDPIRTY_URL')
 class JTController {
+
+    async createOrder({ request, response }) {
+        const { reciver, cod, tel, address, remark } = request.body
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        configheader.parameter = `${reciver}\n\n${cod}\n\n${tel}\n\n${address}\n\n***${remark}\n\n-End-`
+        // return  configheader.parameter
+        try {
+            const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/analysisOrder.do`, configheader)
+            if (data.data.orders[0].errorMsg) {
+                return response.json({
+                    success: false,
+                    message: data.data.orders[0].errorMsg,
+                })
+            }
+            // will create order and return tracking
+            return response.json(data)
+        } catch (error) {
+            return response.json({
+                success: false,
+                message: error,
+            })
+        }
+    }
     async getTest({ request, response }) {
         const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
         configheader.parameter = {
@@ -97,9 +120,9 @@ class JTController {
     //     dateFrom: 'required|dateFormat:MM/DD/YYYY',
     //     dateTo: 'required|dateFormat:MM/DD/YYYY',
     //   }
-  
+
     //   let pageIndex = request.post().page
-  
+
     //   if (!pageIndex) {
     //     pageIndex = 1
     //   }
