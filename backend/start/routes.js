@@ -19,9 +19,11 @@ const Route = use('Route')
 
 Route.on('/').render('welcome')
 Route.group(() => {
-  Route.post('/login', 'AgentController.login')
   Route.post('/list', 'JTController.getTest')
-}).prefix('v1/agent')
+  Route.post('/order', 'JTController.getOrder')
+  Route.post('/tracking', 'JTController.getTracking')
+  Route.post('/print', 'JTController.getPrint')
+}).prefix('v1/jt').middleware(['appAuth'])
 
 // Route.group(() => {
 //   Route.get('/info', 'AgentController.getInfo')

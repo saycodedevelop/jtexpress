@@ -1,6 +1,6 @@
 'use strict'
 const Redis = use('Redis')
-
+const LoginJT = use('App/Libs/LoginJT')
 class GenerateHeader {
 
     static async gennerateTimeAndUniqeId() {
@@ -15,7 +15,12 @@ class GenerateHeader {
 
             return result;
         }
-        const AdminToken = await Redis.get('Admin-Token')
+        let AdminToken = await Redis.get('Admin-Token')
+        if (!AdminToken) {
+            console.log('re call login');
+            await LoginJT.run()
+            AdminToken = await Redis.get('Admin-Token')
+        }
         return {
             token: AdminToken.replace(/^"(.*)"$/, '$1'),
             t: new Date().getTime(),
