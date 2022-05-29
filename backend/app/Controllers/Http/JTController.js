@@ -89,6 +89,27 @@ class JTController {
             return 'err'
         }
     }
+
+    // validate Example
+    // const rules = {
+    //     username: 'required',
+    //     game: 'required',
+    //     dateFrom: 'required|dateFormat:MM/DD/YYYY',
+    //     dateTo: 'required|dateFormat:MM/DD/YYYY',
+    //   }
+  
+    //   let pageIndex = request.post().page
+  
+    //   if (!pageIndex) {
+    //     pageIndex = 1
+    //   }
+    //   const validation = await validate(request.all(), rules)
+    //   if (validation.fails()) {
+    //     return response.json({
+    //       success: false,
+    //       message: 'plases check input data',
+    //     })
+    //   }
 }
 
 module.exports = JTController
