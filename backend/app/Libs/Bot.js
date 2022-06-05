@@ -12,8 +12,8 @@ class Bot {
     })
     const page = await browser.newPage()
 
-    // if (request.header('ufa-key')) {
-    //   let cookies = await Redis.hget(request.header('ufa-key'), 'cookies')
+    // if (request.header('app-key')) {
+    //   let cookies = await Redis.hget(request.header('app-key'), 'cookies')
     //   cookies = JSON.parse(cookies)
     //   await page.setCookie(...cookies)
     // }

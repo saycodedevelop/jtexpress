@@ -114,9 +114,9 @@ class LoginJT {
         if (!sessionStorageData.userInfo) {
             return { msg: 'Login False', time: new Date(), data: sessionStorageData }
         }
-        await Redis.set('userInfo', JSON.stringify(sessionStorageData.userInfo));
-        await Redis.set('Admin-Token', JSON.stringify(sessionStorageData['Admin-Token']));
-        await Redis.set('UpdateTime', JSON.stringify(new Date()));
+        await Redis.set('userInfo', JSON.stringify(sessionStorageData.userInfo), 'EX', 3600);
+        await Redis.set('Admin-Token', JSON.stringify(sessionStorageData['Admin-Token']), 'EX', 3600);
+        await Redis.set('UpdateTime', JSON.stringify(new Date()), 'EX', 3600);
         return { msg: 'Login Success', time: new Date() }
     }
 }

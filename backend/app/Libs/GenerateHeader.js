@@ -22,7 +22,7 @@ class GenerateHeader {
             AdminToken = await Redis.get('Admin-Token')
         }
         return {
-            token: AdminToken.replace(/^"(.*)"$/, '$1'),
+            token: AdminToken ? AdminToken.replace(/^"(.*)"$/, '$1') : null,
             t: new Date().getTime(),
             s: generateString(32),
         }
