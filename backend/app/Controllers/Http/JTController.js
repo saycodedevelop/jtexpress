@@ -6,7 +6,7 @@ const axios = require('axios')
 const WEBSITE_URL = Env.get('THIRDPIRTY_URL')
 class JTController {
 
-    async createOrder({ request, response }) {
+    async checkOrder({ request, response }) {
         const { reciver, cod, tel, address, remark } = request.body
         const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
         configheader.parameter = `${reciver}\n\n${cod}\n\n${tel}\n\n${address}\n\n***${remark}\n\n-End-`
@@ -28,6 +28,48 @@ class JTController {
             })
         }
     }
+
+    async createOrder({ request, response }) {
+        const data = request.body
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        configheader.parameter = data.order
+        try {
+            const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/insertOrder.do`, configheader)
+            if (data.data) {
+                return response.json({
+                    success: false,
+                    message: data.data,
+                })
+            }
+            // will create order and return tracking
+            return response.json(data)
+        } catch (error) {
+            console.log(error);
+            return response.json({
+                success: false,
+                message: error,
+            })
+        }
+    }
+
+    async chartOrder({ request, response }) {
+        const { queryTimeSimplify, queryType } = request.body
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        configheader.parameter = {
+            queryTimeSimplify,
+            queryType,
+        }
+        try {
+            const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/getChartData.do`, configheader)
+            return response.json(data)
+        } catch (error) {
+            return response.json({
+                success: false,
+                message: error,
+            })
+        }
+    }
+
     async getTest({ request, response }) {
         const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
         configheader.parameter = {
@@ -92,6 +134,19 @@ class JTController {
                 success: false,
                 message: error,
             })
+        }
+    }
+
+
+    async getFee({ request, response }) {
+        const { receiverAreaId, senderCityId, type, weight } = request.body
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        configheader.parameter = { receiverAreaId, senderCityId, type, weight }
+        try {
+            const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/getFee.do`, configheader)
+            return response.json(data)
+        } catch (error) {
+            return 'err'
         }
     }
 
