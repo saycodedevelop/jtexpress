@@ -42,6 +42,32 @@ class JTController {
                 })
             }
             // will create order and return tracking
+            console.log(data);
+            return response.json(data)
+        } catch (error) {
+            console.log(error);
+            return response.json({
+                success: false,
+                message: error,
+            })
+        }
+    }
+
+
+    async cancelOrder({ request, response }) {
+        const data = request.body
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        configheader.parameter = { ids: data.ids }
+        try {
+            const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/cancelOrder.do`, configheader)
+            if (data.data) {
+                return response.json({
+                    success: false,
+                    message: data.data,
+                })
+            }
+            // will create order and return tracking
+            console.log(data);
             return response.json(data)
         } catch (error) {
             console.log(error);

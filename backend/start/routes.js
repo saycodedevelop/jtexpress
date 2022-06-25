@@ -24,6 +24,7 @@ Route.group(() => {
   Route.post('/order/list', 'JTController.getOrder')
   Route.post('/order/check', 'JTController.checkOrder')
   Route.post('/order/create', 'JTController.createOrder')
+  Route.post('/order/cancel', 'JTController.cancelOrder')
   Route.post('/order/chart', 'JTController.chartOrder')
   Route.post('/tracking', 'JTController.getTracking')
   Route.post('/print', 'JTController.getPrint')
