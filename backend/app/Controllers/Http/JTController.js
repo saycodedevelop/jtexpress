@@ -205,7 +205,7 @@ class JTController {
                 message: 'กรุณาส่งหมายเลขออเดอร์ และ templet',
             })
         }
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = { ids, templet: 7 }
         // try {
         const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/printOrder.do`, configheader)

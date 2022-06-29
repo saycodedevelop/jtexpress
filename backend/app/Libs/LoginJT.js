@@ -1,14 +1,12 @@
 'use strict'
 const Env = use('Env')
-const JT_USERNAME = Env.get('JT_USERNAME')
-const JT_PASSWORD = Env.get('JT_PASSWORD')
 const WEBSITE_URL = Env.get('THIRDPIRTY_URL')
 const Redis = use('Redis')
 const Bot = use('App/Libs/Bot')
 const { createWorker } = require('tesseract.js')
 const Logger = use('Logger')
 class LoginJT {
-    static async run() {
+    static async run(headerReq) {
         const bot = await Bot.start()
         console.time('wait call wetsite full page')
         await bot.page.goto(WEBSITE_URL, { "waitUntil": "networkidle0" })
@@ -16,10 +14,17 @@ class LoginJT {
 
 
         // user account
+
+        // const USER = {
+        //     username: JT_USERNAME,
+        //     password: JT_PASSWORD,
+        // }
+        const pass = Buffer.from(headerReq['vip-auth'],'base64').toString('utf-8')
         const USER = {
-            username: JT_USERNAME,
-            password: JT_PASSWORD,
+            username: headerReq['vip-username'],
+            password: pass,
         }
+
 
         const SELECTOR = {
             btnCloseDialog: '.el-dialog__headerbtn',
@@ -114,9 +119,9 @@ class LoginJT {
         if (!sessionStorageData.userInfo) {
             return { msg: 'Login False', time: new Date(), data: sessionStorageData }
         }
-        await Redis.set('userInfo', JSON.stringify(sessionStorageData.userInfo), 'EX', 3600);
-        await Redis.set('Admin-Token', JSON.stringify(sessionStorageData['Admin-Token']), 'EX', 3600);
-        await Redis.set('UpdateTime', JSON.stringify(new Date()), 'EX', 3600);
+        await Redis.set('userInfo-' + USER.username, JSON.stringify(sessionStorageData.userInfo), 'EX', 3600);
+        await Redis.set('Admin-Token-' + USER.username, JSON.stringify(sessionStorageData['Admin-Token']), 'EX', 3600);
+        await Redis.set('UpdateTime-' + USER.username, JSON.stringify(new Date()), 'EX', 3600);
         return { msg: 'Login Success', time: new Date() }
     }
 }
