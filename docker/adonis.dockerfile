@@ -3,7 +3,7 @@ FROM node:14.16
 # See https://crbug.com/795759
 RUN git config --global url."https://github.com/".insteadOf git://github.com/
 RUN apt-get update && apt-get install -yq libgconf-2-4
-
+RUN apt-get install -y poppler-utils
 # Install latest chrome dev package and fonts to support major 
 # charsets (Chinese, Japanese, Arabic, Hebrew, Thai and a few others)
 # Note: this installs the necessary libs to make the bundled version 

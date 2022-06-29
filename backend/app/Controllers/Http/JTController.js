@@ -4,6 +4,7 @@ const Env = use('Env')
 const GenerateHeader = use('App/Libs/GenerateHeader')
 const axios = require('axios')
 const WEBSITE_URL = Env.get('THIRDPIRTY_URL')
+
 class JTController {
 
     async checkOrder({ request, response }) {
@@ -193,6 +194,42 @@ class JTController {
             return 'err'
         }
     }
+
+
+
+    async getAreacode({ request, response }) {
+        const { ids } = request.body
+        if (!ids) {
+            return response.json({
+                success: false,
+                message: 'กรุณาส่งหมายเลขออเดอร์ และ templet',
+            })
+        }
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        configheader.parameter = { ids, templet: 7 }
+        // try {
+        const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/printOrder.do`, configheader)
+
+        if (!data.success) {
+            return response.json({ success: false, message: "ตรวจสอบหมายเลข tracking อีกครั้ง" })
+        }
+        const res = await this.decodePdf(data.data.pdf)
+        const preResult = res.split("Order#:")
+        const preResult2 = preResult[0].split(" ")
+        const resultPosition = preResult2.length
+        const areanumber = preResult2[resultPosition - 2]
+        return response.json({ success: true, areanumber })
+    }
+    async decodePdf(urlpdf) {
+        const promise = new Promise((resolve, reject) => {
+            const textract = require('textract');
+            textract.fromUrl(urlpdf, (err, data) => {
+                resolve(data);
+            });
+        })
+        return promise
+    }
+
 
     // validate Example
     // const rules = {

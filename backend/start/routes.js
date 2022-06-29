@@ -28,6 +28,7 @@ Route.group(() => {
   Route.post('/order/chart', 'JTController.chartOrder')
   Route.post('/tracking', 'JTController.getTracking')
   Route.post('/print', 'JTController.getPrint')
+  Route.post('/order/areacode', 'JTController.getAreacode')
 }).prefix('v1/jt').middleware(['appAuth'])
 
 // Route.group(() => {
