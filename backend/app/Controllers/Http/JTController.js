@@ -9,7 +9,7 @@ class JTController {
 
     async checkOrder({ request, response }) {
         const { reciver, cod, tel, address, remark } = request.body
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = `${reciver}\n\n${cod}\n\n${tel}\n\n${address}\n\n***${remark}\n\n-End-`
         // return  configheader.parameter
         try {
@@ -32,7 +32,7 @@ class JTController {
 
     async createOrder({ request, response }) {
         const data = request.body
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = data.order
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/insertOrder.do`, configheader)
@@ -57,7 +57,7 @@ class JTController {
 
     async cancelOrder({ request, response }) {
         const data = request.body
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = { ids: data.ids }
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/cancelOrder.do`, configheader)
@@ -81,7 +81,7 @@ class JTController {
 
     async chartOrder({ request, response }) {
         const { queryTimeSimplify, queryType } = request.body
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = {
             queryTimeSimplify,
             queryType,
@@ -98,7 +98,7 @@ class JTController {
     }
 
     async getTest({ request, response }) {
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = {
             tabKey: '订单导入列表',
         }
@@ -117,7 +117,7 @@ class JTController {
     }
     async getOrder({ request, response }) {
         const { ids, startDate, endDate, page, pageSize, size, idType, signFlag, goodsName, orderStatus, printFlag, isMult } = request.body
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = {
             ids,
             startDate,
@@ -151,7 +151,7 @@ class JTController {
                 message: 'กรุณาส่งหมายเลขออเดอร์ (หากมีมากกว่า1 ให้ใช้เครื่องหาย "," )',
             })
         }
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = ids
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/trackingList.do`, configheader)
@@ -167,7 +167,7 @@ class JTController {
 
     async getFee({ request, response }) {
         const { receiverAreaId, senderCityId, type, weight } = request.body
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = { receiverAreaId, senderCityId, type, weight }
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/getFee.do`, configheader)
@@ -185,7 +185,7 @@ class JTController {
                 message: 'กรุณาส่งหมายเลขออเดอร์ และ templet',
             })
         }
-        const configheader = await GenerateHeader.gennerateTimeAndUniqeId()
+        const configheader = await GenerateHeader.gennerateTimeAndUniqeId(request.headers())
         configheader.parameter = { ids, templet }
         try {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/printOrder.do`, configheader)
