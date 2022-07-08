@@ -48,7 +48,7 @@ class JTController {
         } catch (error) {
             console.log(error);
             return response.json({
-                success: false,
+                success: true,
                 message: error,
             })
         }
