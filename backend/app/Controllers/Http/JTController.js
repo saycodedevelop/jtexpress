@@ -38,7 +38,7 @@ class JTController {
             const { data } = await axios.post(`${WEBSITE_URL}/taiguo-vip-interface/api/insertOrder.do`, configheader)
             if (data.data) {
                 return response.json({
-                    success: false,
+                    success: true,
                     message: data.data,
                 })
             }
@@ -48,7 +48,7 @@ class JTController {
         } catch (error) {
             console.log(error);
             return response.json({
-                success: true,
+                success: false,
                 message: error,
             })
         }
