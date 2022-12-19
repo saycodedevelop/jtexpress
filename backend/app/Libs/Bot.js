@@ -6,10 +6,14 @@ class Bot {
   static async start() {
     const browserFetcher = await puppeteer.createBrowserFetcher()
     const revisionInfo = await browserFetcher.download('818858')
-    const browser = await puppeteer.launch({
-      executablePath: revisionInfo.executablePath,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
+    // const browser = await puppeteer.launch({
+    //   executablePath: revisionInfo.executablePath,
+    //   args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    // })
+
+    const browser = await puppeteer.launch( {headless: true, args: ['--no-sandbox']})
+
+   
     const page = await browser.newPage()
 
     // if (request.header('app-key')) {
