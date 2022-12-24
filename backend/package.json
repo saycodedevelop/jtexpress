@@ -36,7 +36,7 @@
     "pdf-to-text": "0.0.7",
     "puppeteer": "^5.5.0",
     "puppeteer-firefox": "^0.5.1",
-    "tesseract.js": "^2.1.4",
+    "tesseract.js": "2.1.4",
     "textract": "^2.5.0"
   },
   "devDependencies": {
